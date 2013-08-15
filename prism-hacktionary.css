@@ -9,3 +9,17 @@ pre[class*="language-"] a[href]:hover {
   cursor: help;
   text-decoration: underline;
 }
+
+.prism-hacktionary-popover {
+  position: absolute;
+  width: 300px;
+  margin-top: 20px;
+  margin-left: -100px;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.prism-hacktionary-popover.hidden {
+  display: none;
+}

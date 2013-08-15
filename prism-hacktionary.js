@@ -64,7 +64,7 @@
       ref = ref[desc[i]];
     }
 
-    if ($el.data("bs.popover") === undefined) {
+    if ($el.data("bs.popover") === undefined && $el.data("prism-hacktionary.popover") === undefined) {
       $el.popover({
         html: true,
         content: ref,
@@ -82,5 +82,41 @@
     });
 
   });
+
+  // Custom popovers if there's no bootstrap:
+  if ($.fn.popover === undefined) {
+    $.fn.popover = function(arg) {
+      var $popover;
+
+      if (arg === "destroy") {
+        $popover = this.data("prism-hacktionary.popover");
+        if ($popover !== undefined) {
+          $popover.remove();
+          this.data("prism-hacktionary.popover", undefined);
+        }
+        return this;
+      }
+
+      if (arg === "show") {
+        $popover = this.data("prism-hacktionary.popover");
+        if ($popover !== undefined) {
+          $popover.removeClass("hidden");
+        }
+        return this;
+      }
+
+      if (typeof arg === "object") {
+        // set up popover
+        $popover = $('<div class="prism-hacktionary-popover hidden"></div>');
+        $popover.html(arg.content);
+        $popover.css(this.offset());
+        $popover.appendTo(document.body);
+
+        this.data("prism-hacktionary.popover", $popover);
+
+        return this;
+      }
+    }
+  }
 
 }());
